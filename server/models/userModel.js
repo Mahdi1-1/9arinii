@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'admin','enseignant', 'parent'],
+    enum: ['student', 'admin', 'enseignant', 'parent'],
     required: true
   },
   date_naissance: {
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   telephone: {
-    type: int,
+    type: Number, // Correction: 'int' n'existe pas dans Mongoose, utiliser Number
     required: true
   },
   adresse: {
@@ -40,16 +40,22 @@ const userSchema = new mongoose.Schema({
   },
   diplome: {
     type: String,
-    required: true
+    required: function() {
+      return this.role === 'enseignant'; // Requis uniquement pour les enseignants
+    }
   },
   status: {
     type: String,
     enum: ['Célibataire', 'Marié', 'Divorcé'],
-    required: true
+    required: function() {
+      return this.role === 'enseignant' || this.role === 'parent'; // Requis pour certains rôles
+    }
   },
   specialite: {
     type: String,
-    required: true
+    required: function() {
+      return this.role === 'enseignant'; // Requis uniquement pour les enseignants
+    }
   },
   sexe: {
     type: String,
@@ -60,6 +66,11 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Ajouter des index pour améliorer les performances
+userSchema.index({ email: 1 });
+userSchema.index({ role: 1 });
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
+

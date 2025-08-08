@@ -1,0 +1,108 @@
+/* Styles personnalisés pour la navbar */
+/* Style principal de la navbar */
+.navbar {
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem 0; /* Augmenter le padding vertical pour rendre la navbar plus grande */
+}
+/* Animation de transition pour les liens */
+.navbar .nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  margin: 0 0.2rem;
+  border-radius: 4px;
+}
+
+/* Effet de survol sur les liens */
+.navbar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Style pour le lien actif */
+.navbar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Animation pour le lien actif */
+.navbar .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  animation: activeLink 0.3s forwards;
+}
+
+@keyframes activeLink {
+  to {
+    width: 80%;
+  }
+}
+
+/* Style pour la marque */
+.navbar-brand {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+/* Style pour le menu déroulant */
+.dropdown-menu {
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: dropdownFade 0.3s;
+}
+
+.dropdown-item {
+  padding: 0.6rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(37, 99, 235, 0.1);
+  transform: translateX(5px);
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Effet de transition pour le menu mobile */
+.navbar-collapse {
+  transition: all 0.3s ease;
+}
+
+/* Effet de survol sur le bouton de déconnexion */
+.dropdown-item.text-danger:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .navbar .nav-link {
+    margin: 0.2rem 0;
+  }
+  
+  .navbar .nav-link.active::after {
+    width: 30%;
+    animation: none;
+  }
+}

@@ -1,11 +1,22 @@
 :root {
+  --primary-blue: #2563eb;
+  --primary-blue-hover: #1d4ed8;
+  --primary-green: #10b981;
+  --primary-green-hover: #059669;
+  --light-blue: #dbeafe;
+  --light-green: #d1fae5;
+  --dark-blue: #1e3a8a;
+  --dark-green: #065f46;
+  --neutral-bg: #f8fafc;
+  --neutral-text: #334155;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--neutral-text);
+  background-color: var(--neutral-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,26 +24,57 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--neutral-bg);
+  padding-top: 0;
+  transition: padding-top 0.3s ease;
+}
+
+/* Effet de transition pour le contenu principal avec navbar sticky */
+.sticky-top + .container {
+  transition: margin-top 0.3s ease;
+}
+
+a {
+  font-weight: 500;
+  color: var(--primary-blue);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-blue-hover);
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2.5em;
   line-height: 1.1;
+  margin-bottom: 1rem;
+  color: var(--dark-blue);
+}
+
+h2 {
+  font-size: 1.8em;
+  color: var(--dark-green);
+  margin-bottom: 0.8rem;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: var(--primary-blue);
+  margin-bottom: 0.6rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--neutral-text);
 }
 
 button {
@@ -42,27 +84,60 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--neutral-bg);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: border-color 0.25s, background-color 0.25s, transform 0.3s;
 }
 
-@media (prefers-color-scheme: light) {
+button:hover {
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto var(--primary-blue);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--primary-blue), var(--primary-green));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--primary-blue-hover), var(--primary-green-hover));
+}
+
+/* Accessibilité */
+:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+/* Mode clair/sombre */
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #e2e8f0;
+    background-color: #1e293b;
   }
+
   a:hover {
-    color: #747bff;
+    color: var(--primary-green);
   }
+
   button {
-    background-color: #f9f9f9;
+    background-color: #334155;
+    color: #e2e8f0;
   }
 }
