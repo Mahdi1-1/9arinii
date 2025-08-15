@@ -50,6 +50,7 @@ console.log(chalk.blue('🔌 Tentative de connexion à MongoDB Atlas:'));
 console.log(chalk.blue(`   ${displaySafeMongoURI()}`));
 
 // Connexion à MongoDB Atlas
+console.log("MONGODB_URI:", process.env.MONGODB_URI);
 connectDB()
   .then(() => {
     // Routes API

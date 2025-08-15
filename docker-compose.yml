@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+   build:
+     context: ./server
+     dockerfile: Dockerfile
+   ports:
+    - "5000:5000"
+   env_file:
+    - .env  # charge ton fichier .env contenant MONGODB_URI vers Atlas
+
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

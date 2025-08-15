@@ -1,0 +1,27 @@
+# Utiliser une image Node.js officielle
+FROM node:18
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers nécessaires
+COPY package.json package-lock.json ./
+
+# Installer les dépendances
+RUN npm install
+
+# Copier le reste des fichiers
+COPY . .
+
+# Construire l'application React
+RUN npm run build
+
+# Utiliser une image Nginx pour servir les fichiers
+FROM nginx:alpine
+COPY --from=0 /app/dist /usr/share/nginx/html
+
+# Exposer le port pour le frontend
+EXPOSE 80
+
+# Commande pour démarrer Nginx
+CMD ["nginx", "-g", "daemon off;"]
