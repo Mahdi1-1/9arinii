@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         REGISTRY = "docker.io"
-        IMAGE_NAME = "ton_dockerhub_username/ton_app"
+        DOCKERHUB_USER = "mahdimasmoudi"   // ⚠️ change avec ton username DockerHub
     }
 
     stages {
@@ -13,10 +13,18 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build client image') {
             steps {
                 script {
-                    docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
+                    docker.build("${DOCKERHUB_USER}/mon-app-client:${env.BUILD_NUMBER}", "-f client/dockerfile ./client")
+                }
+            }
+        }
+
+        stage('Build server image') {
+            steps {
+                script {
+                    docker.build("${DOCKERHUB_USER}/mon-app-server:${env.BUILD_NUMBER}", "-f server/dockerfile ./server")
                 }
             }
         }
@@ -29,12 +37,21 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push client image') {
             steps {
                 script {
-                    docker.image("${IMAGE_NAME}:${env.BUILD_NUMBER}").push()
+                    docker.image("${DOCKERHUB_USER}/mon-app-client:${env.BUILD_NUMBER}").push()
+                }
+            }
+        }
+
+        stage('Push server image') {
+            steps {
+                script {
+                    docker.image("${DOCKERHUB_USER}/mon-app-server:${env.BUILD_NUMBER}").push()
                 }
             }
         }
     }
 }
+
