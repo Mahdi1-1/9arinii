@@ -1,121 +1,45 @@
+/* ImageUploader styles migrated to Tailwind classes */
+/* These styles are now handled by Tailwind classes in the component */
+
+/* Legacy styles - can be removed after full migration */
 .image-uploader-container {
-  width: 100%;
-  margin-bottom: 1rem;
+  /* Replaced with Tailwind: w-full mb-4 */
 }
 
 .image-upload-area {
-  width: 100%;
-  min-height: 200px;
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: #f8f9fa;
-  position: relative;
-  overflow: hidden;
-}
-
-.image-upload-area:hover {
-  border-color: #2563eb;
-  background-color: #f0f4ff;
+  /* Replaced with Tailwind: w-full min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg flex justify-center items-center cursor-pointer transition-all duration-300 bg-gray-50 hover:border-blue-500 hover:bg-blue-50 */
 }
 
 .image-upload-area.dragging {
-  border-color: #2563eb;
-  background-color: #e6efff;
-  transform: scale(1.01);
+  /* Replaced with Tailwind: border-blue-500 bg-blue-100 scale-101 animate-pulse */
 }
 
 .upload-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  text-align: center;
-  color: #6c757d;
+  /* Replaced with Tailwind: flex flex-col items-center p-8 text-center text-gray-600 */
 }
 
 .upload-placeholder i {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #2563eb;
-}
-
-.upload-placeholder p {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.upload-placeholder span {
-  font-size: 0.9rem;
-  color: #6c757d;
+  /* Replaced with Tailwind: text-5xl mb-4 text-blue-500 */
 }
 
 .file-input {
-  display: none;
+  /* Replaced with Tailwind: hidden */
 }
 
 .image-preview {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* Replaced with Tailwind: w-full h-full relative flex justify-center items-center */
 }
 
 .image-preview img {
-  max-width: 100%;
-  max-height: 200px;
-  object-fit: contain;
-  border-radius: 4px;
+  /* Replaced with Tailwind: max-w-full max-h-[200px] object-contain rounded */
 }
 
 .change-image-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.change-image-btn:hover {
-  background-color: rgba(0, 0, 0, 0.9);
+  /* Replaced with Tailwind: absolute bottom-2 right-2 bg-black/70 text-white border-none rounded px-3 py-1.5 text-sm cursor-pointer transition-all duration-200 flex items-center gap-1 */
 }
 
 .image-upload-error {
-  color: #dc2626;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  padding-left: 0.5rem;
+  /* Replaced with Tailwind: text-red-600 text-sm mt-2 pl-2 */
 }
 
-/* Animation pour le glisser-déposer */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.dragging {
-  animation: pulse 1.5s infinite;
-}
+/* All other styles are now handled by Tailwind classes */

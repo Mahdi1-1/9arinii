@@ -1,10 +1,8 @@
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import './Navbar.css';
 
-// Configuration des liens basée sur les rôles
 const NAV_LINKS = {
   common: [
     { to: '/', label: 'Accueil', icon: 'bi-house-fill' },
@@ -33,163 +31,182 @@ function Navbar({ isAuthenticated, setIsAuthenticated }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Charger les infos utilisateur depuis localStorage au montage
   useEffect(() => {
     if (isAuthenticated) {
       const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
+      if (storedUser) setUser(JSON.parse(storedUser));
     } else {
       setUser(null);
     }
   }, [isAuthenticated]);
 
-  // Fermer le menu mobile quand on change de page
+  // fermer menu quand on change de route
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
-  // Fonction de déconnexion avec gestion d'erreurs
   const handleLogout = async () => {
     setIsLoading(true);
     try {
-      // Nettoyer localStorage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-
-      // Mettre à jour l'état
       setIsAuthenticated(false);
       setUser(null);
-
-      // Notification avec react-toastify
       toast.success('Déconnexion réussie');
-
-      // Rediriger
       navigate('/login');
-    } catch (error) {
-      console.error('Erreur lors de la déconnexion:', error);
+    } catch (err) {
+      console.error(err);
       toast.error('Erreur lors de la déconnexion');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Vérifier si un lien est actif
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
-
-  // Déterminer les liens en fonction du rôle
-  const role = user?.role || 'student'; // Par défaut, étudiant
+  const isActive = (path) => location.pathname === path;
+  const role = user?.role || 'student';
   const authLinks = isAuthenticated ? NAV_LINKS.authenticated[role] || [] : [];
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top" aria-label="Barre de navigation principale">
-      <div className="container">
-        <Link className="navbar-brand d-flex align-items-center" to="/" aria-label="Retour à l'accueil">
-          <i className="bi bi-mortarboard-fill me-2 fs-4"></i>
-          <span className="fw-bold">9arinii</span>
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded={isMenuOpen}
-          aria-label="Ouvrir le menu"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
-          <ul className="navbar-nav me-auto">
-            {NAV_LINKS.common.map((link) => (
-              <li key={link.to} className="nav-item">
-                <Link
-                  className={`nav-link d-flex align-items-center ${isActive(link.to) ? 'active fw-bold' : ''}`}
-                  to={link.to}
-                >
-                  <i className={`bi ${link.icon} me-1`}></i>
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            {isAuthenticated &&
-              authLinks.map((link) => (
-                <li key={link.to} className="nav-item">
-                  <Link
-                    className={`nav-link d-flex align-items-center ${isActive(link.to) ? 'active fw-bold' : ''}`}
-                    to={link.to}
-                  >
-                    <i className={`bi ${link.icon} me-1`}></i>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-          </ul>
+    // nav fixé et full-width
+    <nav className="fixed top-0 left-0 right-0 w-full z-50 bg-gradient-to-r from-blue-500 to-green-500 shadow-md" aria-label="Barre de navigation principale">
+      {/* zone centrée (le gradient reste full-width) */}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-20">
+          <Link className="flex items-center text-white font-bold text-xl tracking-wide transition-transform hover:scale-105" to="/" aria-label="Retour à l'accueil">
+            <i className="bi bi-mortarboard-fill mr-2 text-2xl" />
+            <span>9arinii</span>
+          </Link>
 
-          <ul className="navbar-nav">
+          {/* Desktop links */}
+          <div className="hidden lg:flex lg:items-center lg:space-x-4">
+            {NAV_LINKS.common.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className={`flex items-center text-white hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 ${isActive(l.to) ? 'bg-white/20 font-semibold' : ''}`}
+              >
+                <i className={`bi ${l.icon} mr-2`} />
+                {l.label}
+              </Link>
+            ))}
+
+            {isAuthenticated &&
+              authLinks.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className={`flex items-center text-white hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 ${isActive(l.to) ? 'bg-white/20 font-semibold' : ''}`}
+                >
+                  <i className={`bi ${l.icon} mr-2`} />
+                  {l.label}
+                </Link>
+              ))}
+          </div>
+
+          {/* Right area: user / mobile button */}
+          <div className="flex items-center space-x-2">
+            {/* utilisateur (desktop) */}
             {isAuthenticated ? (
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle d-flex align-items-center"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+              <div className="hidden lg:block relative group">
+                <button
+                  className="flex items-center text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors"
                   aria-label={`Menu de ${user?.name || user?.email || 'Mon compte'}`}
                 >
-                  <i className="bi bi-person-circle me-1 fs-5"></i>
-                  <span>{user?.name || user?.email || 'Mon compte'}</span>
-                </a>
-                <ul className="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="navbarDropdown">
+                  <i className="bi bi-person-circle mr-2 text-lg" />
+                  <span className="max-w-[160px] truncate">{user?.name || user?.email || 'Mon compte'}</span>
+                  <i className="bi bi-chevron-down ml-1 text-sm" />
+                </button>
+
+                <ul className="absolute right-0 mt-0 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
                   <li>
-                    <Link className="dropdown-item d-flex align-items-center" to={`/users/${user?.id}`}>
-                      <i className="bi bi-person-badge me-2"></i>
+                    <Link className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" to={`/users/${user?.id}`}>
+                      <i className="bi bi-person-badge mr-2" />
                       Mon profil
                     </Link>
                   </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
+                  <li><hr className="my-1 border-gray-200" /></li>
                   <li>
                     <button
-                      className="dropdown-item d-flex align-items-center text-danger"
+                      className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                       onClick={handleLogout}
                       disabled={isLoading}
-                      aria-label="Se déconnecter"
                     >
-                      <i className="bi bi-box-arrow-right me-2"></i>
-                      {isLoading ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          Déconnexion...
-                        </>
-                      ) : 'Déconnexion'}
+                      <i className="bi bi-box-arrow-right mr-2" />
+                      {isLoading ? 'Déconnexion...' : 'Déconnexion'}
                     </button>
                   </li>
                 </ul>
-              </li>
+              </div>
             ) : (
-              <>
-                <li className="nav-item">
-                  <Link className={`nav-link d-flex align-items-center ${isActive('/login') ? 'active fw-bold' : ''}`} to="/login">
-                    <i className="bi bi-box-arrow-in-right me-1"></i>
-                    Connexion
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className={`nav-link d-flex align-items-center ${isActive('/inscription') ? 'active fw-bold' : ''}`} to="/inscription">
-                    <i className="bi bi-person-plus-fill me-1"></i>
-                    Inscription
-                  </Link>
-                </li>
-              </>
+              <div className="hidden lg:flex lg:items-center lg:space-x-2">
+                <Link className={`flex items-center text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors ${isActive('/login') ? 'bg-white/20' : ''}`} to="/login">
+                  <i className="bi bi-box-arrow-in-right mr-1" /> Connexion
+                </Link>
+                <Link className={`flex items-center text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors ${isActive('/inscription') ? 'bg-white/20' : ''}`} to="/inscription">
+                  <i className="bi bi-person-plus-fill mr-1" /> Inscription
+                </Link>
+              </div>
             )}
-          </ul>
+
+            {/* bouton mobile (toujours affiché sur petit écrans) */}
+            <button
+              className="lg:hidden text-white p-2 rounded-md hover:bg-white/10 transition-colors"
+              type="button"
+              aria-expanded={isMenuOpen}
+              aria-label="Ouvrir le menu"
+              onClick={() => setIsMenuOpen((s) => !s)}
+            >
+              <i className={`bi ${isMenuOpen ? 'bi-x-lg' : 'bi-list'} text-2xl`} />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile panel: full-width sous la barre (mais centré grâce au container) */}
+        <div className={`${isMenuOpen ? 'block' : 'hidden'} lg:hidden pb-4`}>
+          <div className="bg-gradient-to-r from-blue-500 to-green-500 rounded-b-md">
+            <ul className="flex flex-col p-4 space-y-2">
+              {NAV_LINKS.common.map((l) => (
+                <li key={l.to}>
+                  <Link
+                    to={l.to}
+                    className={`block text-white hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 ${isActive(l.to) ? 'bg-white/20 font-semibold' : ''}`}
+                  >
+                    <i className={`bi ${l.icon} mr-2`} /> {l.label}
+                  </Link>
+                </li>
+              ))}
+
+              {isAuthenticated &&
+                authLinks.map((l) => (
+                  <li key={l.to}>
+                    <Link
+                      to={l.to}
+                      className={`block text-white hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 ${isActive(l.to) ? 'bg-white/20 font-semibold' : ''}`}
+                    >
+                      <i className={`bi ${l.icon} mr-2`} /> {l.label}
+                    </Link>
+                  </li>
+                ))}
+
+              <li className="pt-2 border-t border-white/10">
+                {isAuthenticated ? (
+                  <div className="flex flex-col space-y-2">
+                    <Link className="text-white px-3 py-2 rounded-md bg-white/10" to={`/users/${user?.id}`}>
+                      <i className="bi bi-person-badge mr-2" /> Mon profil
+                    </Link>
+                    <button onClick={handleLogout} disabled={isLoading} className="text-red-100 px-3 py-2 rounded-md bg-white/5">
+                      {isLoading ? 'Déconnexion...' : 'Déconnexion'}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col space-y-2">
+                    <Link to="/login" className="text-white px-3 py-2 rounded-md bg-white/10">Connexion</Link>
+                    <Link to="/inscription" className="text-white px-3 py-2 rounded-md bg-white/10">Inscription</Link>
+                  </div>
+                )}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -201,4 +218,4 @@ Navbar.propTypes = {
   setIsAuthenticated: PropTypes.func.isRequired,
 };
 
-export default Navbar; 
+export default Navbar;

@@ -1,177 +1,89 @@
-/* Conteneur principal du profil */
+/* Profil styles migrated to Tailwind classes */
+/* These styles are now handled by Tailwind classes in the component */
+
+/* Legacy styles - can be removed after full migration */
 .profile-container {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  max-width: 900px;
-  margin: 0 auto;
+  /* Replaced with Tailwind: bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto */
 }
 
-/* En-tête du profil avec l'image */
 .profile-header {
-  display: flex;
-  align-items: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, #3b82f6, #10b981);
-  color: white;
+  /* Replaced with Tailwind: flex items-center p-8 bg-gradient-to-r from-blue-500 to-green-500 text-white */
 }
 
-/* Conteneur de l'image de profil */
 .profile-image-container {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-right: 2rem;
-  flex-shrink: 0;
-  background-color: #f3f4f6;
-  position: relative;
+  /* Replaced with Tailwind: w-[150px] h-[150px] rounded-full overflow-hidden border-4 border-white shadow-lg mr-8 flex-shrink-0 bg-gray-100 relative */
 }
 
-/* Style de l'image de profil */
 .profile-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ceci est crucial pour cadrer l'image correctement */
-  display: block;
+  /* Replaced with Tailwind: w-full h-full object-cover block */
 }
 
-/* Placeholder pour les utilisateurs sans image */
 .profile-image-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #3b82f6;
-  color: white;
-  font-size: 3rem;
-  font-weight: bold;
+  /* Replaced with Tailwind: w-full h-full flex items-center justify-center bg-blue-500 text-white text-5xl font-bold */
 }
 
-/* Titre du profil (nom et rôle) */
 .profile-title {
-  flex-grow: 1;
+  /* Replaced with Tailwind: flex-grow */
 }
 
 .profile-name {
-  font-size: 2rem;
-  margin: 0 0 0.5rem 0;
-  font-weight: 600;
+  /* Replaced with Tailwind: text-4xl font-semibold mb-2 */
 }
 
 .profile-role {
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-transform: capitalize;
-  background-color: rgba(255, 255, 255, 0.2);
+  /* Replaced with Tailwind: inline-block px-3 py-1 rounded-full text-sm font-medium capitalize bg-white/20 */
 }
 
 .role-admin {
-  background-color: #ef4444;
+  /* Replaced with Tailwind: bg-red-500 */
 }
 
 .role-enseignant {
-  background-color: #3b82f6;
+  /* Replaced with Tailwind: bg-blue-500 */
 }
 
 .role-student {
-  background-color: #10b981;
+  /* Replaced with Tailwind: bg-green-500 */
 }
 
 .role-parent {
-  background-color: #f59e0b;
+  /* Replaced with Tailwind: bg-yellow-500 */
 }
 
-/* Corps du profil */
 .profile-body {
-  padding: 2rem;
+  /* Replaced with Tailwind: p-8 */
 }
 
-/* Sections d'information */
 .profile-section {
-  margin-bottom: 2rem;
+  /* Replaced with Tailwind: mb-8 */
 }
 
 .section-title {
-  font-size: 1.5rem;
-  color: #1f2937;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e5e7eb;
+  /* Replaced with Tailwind: text-2xl text-gray-800 mb-4 pb-2 border-b-2 border-gray-200 */
 }
 
-/* Grille d'informations */
 .profile-info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  /* Replaced with Tailwind: grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6 */
 }
 
 .profile-info-item {
-  margin-bottom: 1rem;
+  /* Replaced with Tailwind: mb-4 */
 }
 
 .info-label {
-  font-size: 0.9rem;
-  color: #6b7280;
-  margin-bottom: 0.3rem;
+  /* Replaced with Tailwind: text-sm text-gray-600 mb-1 */
 }
 
 .info-value {
-  font-size: 1.1rem;
-  color: #1f2937;
-  font-weight: 500;
+  /* Replaced with Tailwind: text-lg text-gray-800 font-medium */
 }
 
-/* Boutons d'action */
 .profile-actions {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: flex-end;
+  /* Replaced with Tailwind: mt-8 flex justify-end */
 }
 
 .btn-edit-profile {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  /* Replaced with Tailwind: bg-blue-500 text-white border-none px-6 py-3 rounded-lg font-medium cursor-pointer transition-colors hover:bg-blue-600 */
 }
 
-.btn-edit-profile:hover {
-  background-color: #2563eb;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .profile-header {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.5rem;
-  }
-  
-  .profile-image-container {
-    margin-right: 0;
-    margin-bottom: 1.5rem;
-    width: 120px;
-    height: 120px;
-  }
-  
-  .profile-info-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .profile-body {
-    padding: 1.5rem;
-  }
-}
+/* All other styles are now handled by Tailwind classes */

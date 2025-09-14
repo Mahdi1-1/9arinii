@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    environment {
+        REGISTRY = "docker.io"
+        IMAGE_NAME = "ton_dockerhub_username/ton_app"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ton-repo/ton-projet.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
+                }
+            }
+        }
+
+        stage('Login to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.image("${IMAGE_NAME}:${env.BUILD_NUMBER}").push()
+                }
+            }
+        }
+    }
+}

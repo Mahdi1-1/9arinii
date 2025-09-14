@@ -1,27 +1,16 @@
-:root {
-  --primary-blue: #2563eb;
-  --primary-blue-hover: #1d4ed8;
-  --primary-green: #10b981;
-  --primary-green-hover: #059669;
-  --light-blue: #dbeafe;
-  --light-green: #d1fae5;
-  --dark-blue: #1e3a8a;
-  --dark-green: #065f46;
-  --neutral-bg: #f8fafc;
-  --neutral-text: #334155;
+@import "tailwindcss";
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: var(--neutral-text);
-  background-color: var(--neutral-bg);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --color-primary-blue: #2563eb;
+  --color-primary-blue-hover: #1d4ed8;
+  --color-primary-green: #10b981;
+  --color-primary-green-hover: #059669;
+  --color-light-blue: #dbeafe;
+  --color-light-green: #d1fae5;
+  --color-dark-blue: #1e3a8a;
+  --color-dark-green: #065f46;
+  --color-neutral-bg: #f8fafc;
+  --color-neutral-text: #334155;
 }
 
 * {
@@ -32,49 +21,50 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--neutral-bg);
-  padding-top: 0;
-  transition: padding-top 0.3s ease;
-}
-
-/* Effet de transition pour le contenu principal avec navbar sticky */
-.sticky-top + .container {
-  transition: margin-top 0.3s ease;
+  background-color: var(--color-neutral-bg);
+  color: var(--color-neutral-text);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   font-weight: 500;
-  color: var(--primary-blue);
+  color: var(--color-primary-blue);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: var(--primary-blue-hover);
+  color: var(--color-primary-blue-hover);
 }
 
 h1 {
   font-size: 2.5em;
   line-height: 1.1;
   margin-bottom: 1rem;
-  color: var(--dark-blue);
+  color: var(--color-dark-blue);
 }
 
 h2 {
   font-size: 1.8em;
-  color: var(--dark-green);
+  color: var(--color-dark-green);
   margin-bottom: 0.8rem;
 }
 
 h3 {
   font-size: 1.5em;
-  color: var(--primary-blue);
+  color: var(--color-primary-blue);
   margin-bottom: 0.6rem;
 }
 
 p {
   margin-bottom: 1rem;
-  color: var(--neutral-text);
+  color: var(--color-neutral-text);
 }
 
 button {
@@ -84,19 +74,19 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--neutral-bg);
+  background-color: var(--color-neutral-bg);
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s, transform 0.3s;
 }
 
 button:hover {
-  border-color: var(--primary-blue);
+  border-color: var(--color-primary-blue);
   transform: translateY(-2px);
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto var(--primary-blue);
+  outline: 2px solid var(--color-primary-blue);
   outline-offset: 2px;
 }
 
@@ -111,17 +101,17 @@ button:focus-visible {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--primary-blue), var(--primary-green));
+  background: linear-gradient(var(--color-primary-blue), var(--color-primary-green));
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(var(--primary-blue-hover), var(--primary-green-hover));
+  background: linear-gradient(var(--color-primary-blue-hover), var(--color-primary-green-hover));
 }
 
-/* Accessibilité */
+/* Accessibility */
 :focus-visible {
-  outline: 3px solid var(--primary-blue);
+  outline: 2px solid var(--color-primary-blue);
   outline-offset: 2px;
 }
 
@@ -133,7 +123,7 @@ button:focus-visible {
   }
 
   a:hover {
-    color: var(--primary-green);
+    color: var(--color-primary-green);
   }
 
   button {

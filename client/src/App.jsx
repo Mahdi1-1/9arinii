@@ -26,7 +26,9 @@ function App() {
         isAuthenticated={isAuthenticated}
         setIsAuthenticated={setIsAuthenticated}
       />
-      <div className="container mt-4" style={{ minHeight: "80vh", position: "relative", zIndex: "1" }}>
+
+      {/* Important : pt-20 pour laisser la place au navbar fixe (h-20). */}
+      <div className="container mx-auto pt-20 min-h-[80vh] relative z-10">
         <Routes>
           <Route
             path="/login"
@@ -69,7 +71,3 @@ function App() {
 }
 
 export default App;
-
-
-
-

@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import './ImageUploader.css';
 
 function ImageUploader({ currentImage, onImageChange }) {
   const [previewUrl, setPreviewUrl] = useState(currentImage || '');
@@ -88,29 +87,29 @@ function ImageUploader({ currentImage, onImageChange }) {
   };
 
   return (
-    <div className="image-uploader-container">
+    <div className="w-full mb-4">
       <div 
-        className={`image-upload-area ${isDragging ? 'dragging' : ''}`}
+        className={`w-full min-h-[200px] border-2 border-dashed rounded-lg flex justify-center items-center cursor-pointer transition-all duration-300 bg-gray-50 hover:border-blue-500 hover:bg-blue-50 ${isDragging ? 'border-blue-500 bg-blue-100 scale-101 animate-pulse' : 'border-gray-300'}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
         {previewUrl ? (
-          <div className="image-preview">
-            <img src={previewUrl} alt="Aperçu" />
+          <div className="w-full h-full relative flex justify-center items-center">
+            <img src={previewUrl} alt="Aperçu" className="max-w-full max-h-[200px] object-contain rounded" />
             <button 
               type="button" 
-              className="change-image-btn"
+              className="absolute bottom-2 right-2 bg-black/70 text-white border-none rounded px-3 py-1.5 text-sm cursor-pointer transition-all duration-200 flex items-center gap-1 hover:bg-black/90"
               onClick={handleButtonClick}
             >
               <i className="bi bi-arrow-repeat"></i> Changer
             </button>
           </div>
         ) : (
-          <div className="upload-placeholder" onClick={handleButtonClick}>
-            <i className="bi bi-cloud-arrow-up-fill"></i>
-            <p>Cliquez ou glissez une image ici</p>
-            <span>JPG, PNG ou GIF (max. 5MB)</span>
+          <div className="flex flex-col items-center p-8 text-center text-gray-600" onClick={handleButtonClick}>
+            <i className="bi bi-cloud-arrow-up-fill text-5xl mb-4 text-blue-500"></i>
+            <p className="text-lg mb-2 font-medium">Cliquez ou glissez une image ici</p>
+            <span className="text-sm text-gray-500">JPG, PNG ou GIF (max. 5MB)</span>
           </div>
         )}
         <input
@@ -118,10 +117,10 @@ function ImageUploader({ currentImage, onImageChange }) {
           ref={fileInputRef}
           onChange={handleFileChange}
           accept="image/jpeg,image/png,image/gif"
-          className="file-input"
+          className="hidden"
         />
       </div>
-      {error && <div className="image-upload-error">{error}</div>}
+      {error && <div className="text-red-600 text-sm mt-2 pl-2">{error}</div>}
     </div>
   );
 }
