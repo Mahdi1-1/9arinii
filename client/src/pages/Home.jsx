@@ -4,7 +4,7 @@ function Home({ message }) {
   return (
     <div>
       <h1>Accueil</h1>
-      <p>Bienvenue sur notre application MERN Stack!</p>
+      <p>Bienvenuuuuuuue sur notre application MERN Stack!</p>
       {message && <p>Message du serveur: {message}</p>}
       
       <div className="mt-4">
